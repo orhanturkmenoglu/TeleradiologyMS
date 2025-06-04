@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: COMMON-LIB
+
+
+springdoc:
+  api-docs:
+    version: openapi_3_0
+    groups:
+      enabled: true
+    path: /swagger-ui.html
