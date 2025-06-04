@@ -55,7 +55,7 @@ public class OpenApiConfig {
     public GroupedOpenApi groupedOpenApi(){
         return GroupedOpenApi.builder()
                 .group(applicationName+" API")
-                .pathsToMatch("/**")
+                .pathsToMatch("/api/v1/**")
                 .build();
     }
 
