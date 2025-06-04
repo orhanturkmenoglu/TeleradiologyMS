@@ -1,4 +1,4 @@
-package com.teleradms.member.service.domain.entities;
+package com.teleradms.member.service.application.dto.response;
 
 import com.teleradms.member.service.domain.enums.ApplicationStatus;
 import com.teleradms.member.service.domain.enums.AreaOfInterestType;
@@ -12,7 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Member {
+public class MemberResponseDTO {
 
     private UUID id;
 

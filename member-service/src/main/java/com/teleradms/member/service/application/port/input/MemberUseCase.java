@@ -1,15 +1,22 @@
 package com.teleradms.member.service.application.port.input;
 
+import com.teleradms.member.service.application.dto.request.CreateMemberRequestDTO;
+import com.teleradms.member.service.application.dto.request.UpdateMemberRequestDTO;
+import com.teleradms.member.service.application.dto.response.MemberResponseDTO;
+
 import java.util.List;
 import java.util.UUID;
 
 public interface MemberUseCase {
 
-    MemberResponse createMember(CreateMemberRequest createMemberRequest);
+    MemberResponseDTO createMember(CreateMemberRequestDTO createMemberRequestDTO);
 
-    MemberResponse getMemberById(UUID memberId);
+    MemberResponseDTO getMemberById(UUID memberId);
 
-    List<MemberResponse> getAllMembers();
+    List<MemberResponseDTO> getAllMembers();
 
-    MemberResponse updateMember(UUID memberId, UpdateMemberRequest updateMemberRequest);
+    MemberResponseDTO updateMember(UUID memberId, UpdateMemberRequestDTO updateMemberRequestDTO);
+
+    void deleteMember(UUID memberId);
+
 }

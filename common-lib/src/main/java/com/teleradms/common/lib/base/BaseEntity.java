@@ -1,6 +1,9 @@
 package com.teleradms.common.lib.base;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +21,6 @@ import java.util.UUID;
 public class BaseEntity implements Serializable {
 
     @Id
-    @GeneratedValue
     private UUID id;
 
     private LocalDateTime createdAt;

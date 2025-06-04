@@ -1,20 +1,15 @@
-package com.teleradms.member.service.domain.entities;
+package com.teleradms.member.service.application.dto.request;
 
 import com.teleradms.member.service.domain.enums.ApplicationStatus;
 import com.teleradms.member.service.domain.enums.AreaOfInterestType;
 import lombok.*;
-
-import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Member {
-
-    private UUID id;
+public class CreateMemberRequestDTO {
 
     private String firstName;
 
@@ -24,13 +19,8 @@ public class Member {
 
     private String email;
 
-    private boolean isActive;
-
     private ApplicationStatus applicationStatus;
 
     private AreaOfInterestType areaOfInterestType;
 
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updatedAt;
 }

@@ -1,20 +1,22 @@
-package com.teleradms.member.service.domain.entities;
+package com.teleradms.member.service.infrastructure.persistence.entity;
 
+import com.teleradms.common.lib.base.BaseEntity;
 import com.teleradms.member.service.domain.enums.ApplicationStatus;
 import com.teleradms.member.service.domain.enums.AreaOfInterestType;
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
-
+@Entity
+@Table(name = "members")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Member {
-
-    private UUID id;
+public class MemberEntity extends BaseEntity {
 
     private String firstName;
 
@@ -29,8 +31,4 @@ public class Member {
     private ApplicationStatus applicationStatus;
 
     private AreaOfInterestType areaOfInterestType;
-
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updatedAt;
 }
