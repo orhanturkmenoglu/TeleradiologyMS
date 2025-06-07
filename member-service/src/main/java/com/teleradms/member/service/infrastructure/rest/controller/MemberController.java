@@ -7,6 +7,7 @@ import com.teleradms.member.service.application.port.input.MemberUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class MemberController {
             @ApiResponse(responseCode = "400", description = "Invalid input")}
     )
     @PostMapping
-    public ResponseEntity<MemberResponseDTO> create(@RequestBody CreateMemberRequestDTO dto) {
+    public ResponseEntity<MemberResponseDTO> create(@Valid @RequestBody CreateMemberRequestDTO dto) {
         MemberResponseDTO member = memberUseCase.createMember(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(member);
     }
@@ -59,7 +60,8 @@ public class MemberController {
             @ApiResponse(responseCode = "404", description = "Member not found")}
     )
     @PutMapping("/{id}")
-    public ResponseEntity<MemberResponseDTO> update(@PathVariable UUID id, @RequestBody UpdateMemberRequestDTO dto) {
+    public ResponseEntity<MemberResponseDTO> update(@PathVariable UUID id,
+                                                    @Valid @RequestBody UpdateMemberRequestDTO dto) {
         return ResponseEntity.ok(memberUseCase.updateMember(id, dto));
     }
 
