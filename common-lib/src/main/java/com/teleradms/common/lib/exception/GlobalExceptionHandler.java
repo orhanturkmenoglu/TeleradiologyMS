@@ -1,5 +1,6 @@
 package com.teleradms.common.lib.exception;
 
+import com.teleradms.common.lib.dto.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

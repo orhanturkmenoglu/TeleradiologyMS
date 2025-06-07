@@ -1,5 +1,6 @@
 package com.teleradms.member.service.infrastructure.rest.controller;
 
+import com.teleradms.common.lib.dto.BaseResponse;
 import com.teleradms.member.service.application.dto.request.CreateMemberRequestDTO;
 import com.teleradms.member.service.application.dto.request.UpdateMemberRequestDTO;
 import com.teleradms.member.service.application.dto.response.MemberResponseDTO;
@@ -29,9 +30,9 @@ public class MemberController {
             @ApiResponse(responseCode = "400", description = "Invalid input")}
     )
     @PostMapping
-    public ResponseEntity<MemberResponseDTO> create(@Valid @RequestBody CreateMemberRequestDTO dto) {
+    public ResponseEntity<BaseResponse<MemberResponseDTO>> create(@Valid @RequestBody CreateMemberRequestDTO dto) {
         MemberResponseDTO member = memberUseCase.createMember(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(member);
+        return ResponseEntity.status(HttpStatus.CREATED).body(BaseResponse.success(member, "Member created successfully", HttpStatus.CREATED.value()));
     }
 
     @Operation(summary = "Get a member by ID")
@@ -40,9 +41,9 @@ public class MemberController {
             @ApiResponse(responseCode = "404", description = "Member not found")}
     )
     @GetMapping("/{id}")
-    public ResponseEntity<MemberResponseDTO> getById(@PathVariable UUID id) {
+    public ResponseEntity<BaseResponse<MemberResponseDTO>> getById(@PathVariable UUID id) {
         MemberResponseDTO member = memberUseCase.getMemberById(id);
-        return ResponseEntity.ok(member);
+        return ResponseEntity.ok(BaseResponse.success(member, "Member found", HttpStatus.OK.value()));
     }
 
     @Operation(summary = "Get all members")
@@ -50,8 +51,9 @@ public class MemberController {
             @ApiResponse(responseCode = "200", description = "Members found")}
     )
     @GetMapping
-    public ResponseEntity<List<MemberResponseDTO>> getAll() {
-        return ResponseEntity.ok(memberUseCase.getAllMembers());
+    public ResponseEntity<BaseResponse<List<MemberResponseDTO>>> getAll() {
+        List<MemberResponseDTO> members = memberUseCase.getAllMembers();
+        return ResponseEntity.ok(BaseResponse.success(members, "Members found", HttpStatus.OK.value()));
     }
 
     @Operation(summary = "Update a member")
@@ -60,9 +62,10 @@ public class MemberController {
             @ApiResponse(responseCode = "404", description = "Member not found")}
     )
     @PutMapping("/{id}")
-    public ResponseEntity<MemberResponseDTO> update(@PathVariable UUID id,
-                                                    @Valid @RequestBody UpdateMemberRequestDTO dto) {
-        return ResponseEntity.ok(memberUseCase.updateMember(id, dto));
+    public ResponseEntity<BaseResponse<MemberResponseDTO>> update(@PathVariable UUID id,
+                                                                  @Valid @RequestBody UpdateMemberRequestDTO dto) {
+        MemberResponseDTO updatedMember = memberUseCase.updateMember(id, dto);
+        return ResponseEntity.ok(BaseResponse.success(updatedMember, "Member updated", HttpStatus.OK.value()));
     }
 
     @Operation(summary = "Delete a member")
@@ -71,8 +74,9 @@ public class MemberController {
             @ApiResponse(responseCode = "404", description = "Member not found")}
     )
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+    public ResponseEntity<BaseResponse<Void>> delete(@PathVariable UUID id) {
         memberUseCase.deleteMember(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .body(BaseResponse.success(null, "Member deleted", HttpStatus.NO_CONTENT.value()));
     }
 }

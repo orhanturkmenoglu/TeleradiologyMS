@@ -1,4 +1,4 @@
-package com.teleradms.common.lib.exception;
+package com.teleradms.common.lib.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
