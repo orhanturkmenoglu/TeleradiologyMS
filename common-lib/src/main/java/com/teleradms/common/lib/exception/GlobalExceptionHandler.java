@@ -28,6 +28,7 @@ public class GlobalExceptionHandler {
         );
     }
 
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<BaseResponse<Void>> handleException(Exception ex,HttpServletRequest request) {
 
@@ -36,4 +37,19 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<BaseResponse<Void>> handleNotFoundException(NotFoundException ex, HttpServletRequest request) {
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                BaseResponse.failure(ex.getMessage(), HttpStatus.NOT_FOUND.value(), request.getServletPath())
+        );
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<BaseResponse<Void>> handleBadRequestException(BadRequestException ex, HttpServletRequest request) {
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                BaseResponse.failure(ex.getMessage(), HttpStatus.BAD_REQUEST.value(), request.getServletPath())
+        );
+    }
 }
