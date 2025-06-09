@@ -1,5 +1,6 @@
 package com.teleradms.member.service.application.service;
 
+import com.teleradms.common.lib.exception.NotFoundException;
 import com.teleradms.member.service.application.dto.request.CreateMemberRequestDTO;
 import com.teleradms.member.service.application.dto.request.UpdateMemberRequestDTO;
 import com.teleradms.member.service.application.dto.response.MemberResponseDTO;
@@ -37,7 +38,7 @@ public class MemberService implements MemberUseCase {
         log.info("Getting member by id: {}", memberId);
 
         Member member = memberRepositoryPort.
-                findById(memberId).orElseThrow(() -> new RuntimeException("Member not found"));
+                findById(memberId).orElseThrow(() -> new NotFoundException("Member not found : "+memberId));
 
         log.info("Member found: {}", member);
         return MemberMapper.toResponse(member);
@@ -58,7 +59,7 @@ public class MemberService implements MemberUseCase {
         log.info("Updating member: {}", updateMemberRequestDTO);
 
         Member member = memberRepositoryPort.
-                findById(memberId).orElseThrow(() -> new RuntimeException("Member not found"));
+                findById(memberId).orElseThrow(() -> new NotFoundException("Member not found"));
 
         Member updatedMember = MemberMapper.updateDomain(member, updateMemberRequestDTO);
         Member savedMember = memberRepositoryPort.save(updatedMember);
@@ -73,7 +74,7 @@ public class MemberService implements MemberUseCase {
         log.info("Deleting member: {}", memberId);
 
         Member member = memberRepositoryPort.findById(memberId)
-                .orElseThrow(() -> new NullPointerException("Member not found"));
+                .orElseThrow(() -> new NotFoundException("Member not found"));
 
         memberRepositoryPort.deleteById(member.getId());
     }
