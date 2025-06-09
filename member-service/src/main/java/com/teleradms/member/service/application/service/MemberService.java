@@ -11,6 +11,7 @@ import com.teleradms.member.service.domain.entities.Member;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -60,6 +61,7 @@ public class MemberService implements MemberUseCase {
         return members.stream().map(MemberMapper::toResponse).toList();
     }
 
+    @CacheEvict(value = "member", key = "#memberId")
     @Override
     public MemberResponseDTO updateMember(UUID memberId, UpdateMemberRequestDTO updateMemberRequestDTO) {
         log.info("Updating member: {}", updateMemberRequestDTO);
@@ -75,6 +77,7 @@ public class MemberService implements MemberUseCase {
         return MemberMapper.toResponse(savedMember);
     }
 
+    @CacheEvict(value = {"member","members"}, key = "#memberId",allEntries = true)
     @Override
     public void deleteMember(UUID memberId) {
         log.info("Deleting member: {}", memberId);

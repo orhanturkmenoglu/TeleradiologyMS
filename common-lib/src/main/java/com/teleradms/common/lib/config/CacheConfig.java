@@ -63,7 +63,7 @@ public class CacheConfig {
                     .cacheDefaults(redisCacheConfiguration())
                     .build();
         } catch (Exception e) {
-            log.warn("Redis bağlantısı sağlanamadı, NoOpCacheManager kullanılıyor: {}", e.getMessage());
+            log.error("Redis bağlantısı sağlanamadı, NoOpCacheManager kullanılıyor: {}", e.getMessage());
             return new NoOpCacheManager();
         }
     }
