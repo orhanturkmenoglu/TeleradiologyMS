@@ -8,6 +8,7 @@ import com.teleradms.member.service.application.mapper.MemberMapper;
 import com.teleradms.member.service.application.port.input.MemberUseCase;
 import com.teleradms.member.service.application.port.output.MemberRepositoryPort;
 import com.teleradms.member.service.domain.entities.Member;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class MemberService implements MemberUseCase {
 
     private final MemberRepositoryPort memberRepositoryPort;
 
+    @Transactional
     @Override
     public MemberResponseDTO createMember(CreateMemberRequestDTO createMemberRequestDTO) {
         log.info("Creating member: {}", createMemberRequestDTO);
