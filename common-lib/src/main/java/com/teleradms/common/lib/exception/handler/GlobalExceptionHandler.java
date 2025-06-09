@@ -1,6 +1,8 @@
-package com.teleradms.common.lib.exception;
+package com.teleradms.common.lib.exception.handler;
 
 import com.teleradms.common.lib.dto.BaseResponse;
+import com.teleradms.common.lib.exception.BadRequestException;
+import com.teleradms.common.lib.exception.NotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
