@@ -11,6 +11,7 @@ import com.teleradms.member.service.domain.entities.Member;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.UUID;
 public class MemberService implements MemberUseCase {
 
     private final MemberRepositoryPort memberRepositoryPort;
+
 
     @Transactional
     @Override
@@ -35,17 +37,19 @@ public class MemberService implements MemberUseCase {
         return MemberMapper.toResponse(savedMember);
     }
 
+    @Cacheable(value = "member", key = "#memberId")
     @Override
     public MemberResponseDTO getMemberById(UUID memberId) {
         log.info("Getting member by id: {}", memberId);
 
         Member member = memberRepositoryPort.
-                findById(memberId).orElseThrow(() -> new NotFoundException("Member not found : "+memberId));
+                findById(memberId).orElseThrow(() -> new NotFoundException("Member not found : " + memberId));
 
         log.info("Member found: {}", member);
         return MemberMapper.toResponse(member);
     }
 
+    @Cacheable(value = "members")
     @Override
     public List<MemberResponseDTO> getAllMembers() {
         log.info("Getting all members");

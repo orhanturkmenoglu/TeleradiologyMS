@@ -3,6 +3,12 @@ spring:
     name: COMMON-LIB
 
 
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+
 springdoc:
   api-docs:
     version: openapi_3_0
