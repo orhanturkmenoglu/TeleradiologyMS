@@ -16,6 +16,7 @@ public class BaseResponse<T> {
     private String message;
     private T data;
     private int status;
+    private String path;
     private List<String> errors;
     private LocalDateTime timestamp;
 
@@ -30,22 +31,24 @@ public class BaseResponse<T> {
                 .build();
     }
 
-    public static <T> BaseResponse<T> failure(String message, int status) {
+    public static <T> BaseResponse<T> failure(String message, int status,String path) {
         return BaseResponse.<T>builder()
                 .success(false)
                 .message(message)
                 .data(null)
                 .status(status)
+                .path(path)
                 .timestamp(LocalDateTime.now())
                 .build();
     }
 
-    public static <T> BaseResponse<T> failure(String message, int status,List<String>errors) {
+    public static <T> BaseResponse<T> failure(String message, int status,String path,List<String>errors) {
         return BaseResponse.<T>builder()
                 .success(false)
                 .message(message)
                 .data(null)
                 .status(status)
+                .path(path)
                 .timestamp(LocalDateTime.now())
                 .errors(errors)
                 .build();
