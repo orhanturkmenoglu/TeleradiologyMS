@@ -12,9 +12,12 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 @Service
@@ -22,7 +25,7 @@ import java.util.UUID;
 public class MemberService implements MemberUseCase {
 
     private final MemberRepositoryPort memberRepositoryPort;
-
+    private final MessageSource messageSource;
 
     @Transactional
     @Override
@@ -37,7 +40,7 @@ public class MemberService implements MemberUseCase {
     @Override
     public MemberResponseDTO getMemberById(UUID memberId) {
         Member member = memberRepositoryPort.
-                findById(memberId).orElseThrow(() -> new NotFoundException("Member not found : " + memberId));
+                findById(memberId).orElseThrow(() -> new NotFoundException(messageSource.getMessage("MEMBER_ERR_NOT_FOUND",new Object[]{memberId}, LocaleContextHolder.getLocale())));
 
         return MemberMapper.toResponse(member);
     }
@@ -53,7 +56,7 @@ public class MemberService implements MemberUseCase {
     @Override
     public MemberResponseDTO updateMember(UUID memberId, UpdateMemberRequestDTO updateMemberRequestDTO) {
         Member member = memberRepositoryPort.
-                findById(memberId).orElseThrow(() -> new NotFoundException("Member not found"));
+                findById(memberId).orElseThrow(() -> new NotFoundException(messageSource.getMessage("MEMBER_ERR_NOT_FOUND", new Object[]{memberId}, LocaleContextHolder.getLocale())));
 
         Member updatedMember = MemberMapper.updateDomain(member, updateMemberRequestDTO);
         Member savedMember = memberRepositoryPort.save(updatedMember);
@@ -65,7 +68,7 @@ public class MemberService implements MemberUseCase {
     @Override
     public void deleteMember(UUID memberId) {
         Member member = memberRepositoryPort.findById(memberId)
-                .orElseThrow(() -> new NotFoundException("Member not found"));
+                .orElseThrow(() -> new NotFoundException(messageSource.getMessage("MEMBER_ERR_NOT_FOUND", new Object[]{memberId}, LocaleContextHolder.getLocale())));
 
         memberRepositoryPort.deleteById(member.getId());
     }
