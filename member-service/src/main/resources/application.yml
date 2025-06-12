@@ -20,3 +20,7 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  cloud:
+    config:
+      uri: http://localhost:8888
