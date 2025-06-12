@@ -10,7 +10,6 @@ import com.teleradms.member.service.application.port.output.MemberRepositoryPort
 import com.teleradms.member.service.domain.entities.Member;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,6 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class MemberService implements MemberUseCase {
 
     private final MemberRepositoryPort memberRepositoryPort;
@@ -29,11 +27,8 @@ public class MemberService implements MemberUseCase {
     @Transactional
     @Override
     public MemberResponseDTO createMember(CreateMemberRequestDTO createMemberRequestDTO) {
-        log.info("Creating member: {}", createMemberRequestDTO);
         Member member = MemberMapper.toDomain(createMemberRequestDTO);
-
         Member savedMember = memberRepositoryPort.save(member);
-        log.info("Member created: {}", savedMember);
 
         return MemberMapper.toResponse(savedMember);
     }
@@ -41,47 +36,34 @@ public class MemberService implements MemberUseCase {
     @Cacheable(value = "member", key = "#memberId")
     @Override
     public MemberResponseDTO getMemberById(UUID memberId) {
-        log.info("Getting member by id: {}", memberId);
-
         Member member = memberRepositoryPort.
                 findById(memberId).orElseThrow(() -> new NotFoundException("Member not found : " + memberId));
 
-        log.info("Member found: {}", member);
         return MemberMapper.toResponse(member);
     }
 
     @Cacheable(value = "members")
     @Override
     public List<MemberResponseDTO> getAllMembers() {
-        log.info("Getting all members");
-
         List<Member> members = memberRepositoryPort.findAll();
-        log.info("Members found: {}", members);
-
         return members.stream().map(MemberMapper::toResponse).toList();
     }
 
     @CacheEvict(value = "member", key = "#memberId")
     @Override
     public MemberResponseDTO updateMember(UUID memberId, UpdateMemberRequestDTO updateMemberRequestDTO) {
-        log.info("Updating member: {}", updateMemberRequestDTO);
-
         Member member = memberRepositoryPort.
                 findById(memberId).orElseThrow(() -> new NotFoundException("Member not found"));
 
         Member updatedMember = MemberMapper.updateDomain(member, updateMemberRequestDTO);
         Member savedMember = memberRepositoryPort.save(updatedMember);
-        log.info("Member updated: {}", savedMember);
-
 
         return MemberMapper.toResponse(savedMember);
     }
 
-    @CacheEvict(value = {"member","members"}, key = "#memberId",allEntries = true)
+    @CacheEvict(value = {"member", "members"}, key = "#memberId", allEntries = true)
     @Override
     public void deleteMember(UUID memberId) {
-        log.info("Deleting member: {}", memberId);
-
         Member member = memberRepositoryPort.findById(memberId)
                 .orElseThrow(() -> new NotFoundException("Member not found"));
 
