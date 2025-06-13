@@ -1,0 +1,22 @@
+server:
+  port: 8072
+
+spring:
+  application:
+    name: API-GATEWAY
+
+  cloud:
+    config:
+      uri: http://localhost:8888
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
+
+
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
