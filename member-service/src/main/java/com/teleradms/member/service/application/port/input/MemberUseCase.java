@@ -17,6 +17,8 @@ public interface MemberUseCase {
 
     MemberResponseDTO updateMember(UUID memberId, UpdateMemberRequestDTO updateMemberRequestDTO);
 
+    boolean existsByPhone(String phoneNumber);
+
     void deleteMember(UUID memberId);
 
 }

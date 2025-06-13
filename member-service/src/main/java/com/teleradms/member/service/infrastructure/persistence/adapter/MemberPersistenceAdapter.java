@@ -47,6 +47,13 @@ public class MemberPersistenceAdapter implements MemberRepositoryPort {
     }
 
     @Override
+    public boolean existsByPhone(String phoneNumber) {
+        log.info("MemberPersistenceAdapter::existsByPhone  Checking if phone number exists: {}", phoneNumber);
+
+        return memberRepository.existsByPhone(phoneNumber);
+    }
+
+    @Override
     public void deleteById(UUID uuid) {
         log.info("MemberPersistenceAdapter::deleteById  Deleting member by id: {}", uuid);
 

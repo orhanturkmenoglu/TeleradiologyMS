@@ -9,4 +9,6 @@ import java.util.UUID;
 public interface MemberRepository extends JpaRepository<MemberEntity, UUID> {
 
     List<MemberEntity> findAllByIsActiveFalse();
+
+    boolean existsByPhone(String phoneNumber);
 }

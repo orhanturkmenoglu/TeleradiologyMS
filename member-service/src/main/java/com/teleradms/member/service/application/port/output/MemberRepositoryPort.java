@@ -14,5 +14,7 @@ public interface MemberRepositoryPort {
 
     List<Member> findAll();
 
+    boolean existsByPhone(String phoneNumber);
+
     void deleteById(UUID uuid);
 }

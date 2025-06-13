@@ -1,5 +1,6 @@
 package com.teleradms.member.service.application.service;
 
+import com.teleradms.common.lib.exception.AlreadyExistsException;
 import com.teleradms.common.lib.exception.NotFoundException;
 import com.teleradms.member.service.application.dto.request.CreateMemberRequestDTO;
 import com.teleradms.member.service.application.dto.request.UpdateMemberRequestDTO;
@@ -17,7 +18,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 @Service
@@ -31,6 +31,9 @@ public class MemberService implements MemberUseCase {
     @Override
     public MemberResponseDTO createMember(CreateMemberRequestDTO createMemberRequestDTO) {
         Member member = MemberMapper.toDomain(createMemberRequestDTO);
+
+        existsByPhone(createMemberRequestDTO.getPhone());
+
         Member savedMember = memberRepositoryPort.save(member);
 
         return MemberMapper.toResponse(savedMember);
@@ -40,7 +43,7 @@ public class MemberService implements MemberUseCase {
     @Override
     public MemberResponseDTO getMemberById(UUID memberId) {
         Member member = memberRepositoryPort.
-                findById(memberId).orElseThrow(() -> new NotFoundException(messageSource.getMessage("MEMBER_ERR_NOT_FOUND",new Object[]{memberId}, LocaleContextHolder.getLocale())));
+                findById(memberId).orElseThrow(() -> new NotFoundException(messageSource.getMessage("MEMBER_ERR_NOT_FOUND", new Object[]{memberId}, LocaleContextHolder.getLocale())));
 
         return MemberMapper.toResponse(member);
     }
@@ -62,6 +65,15 @@ public class MemberService implements MemberUseCase {
         Member savedMember = memberRepositoryPort.save(updatedMember);
 
         return MemberMapper.toResponse(savedMember);
+    }
+
+    @Override
+    public boolean existsByPhone(String phoneNumber) {
+        boolean isPhoneRegistered = memberRepositoryPort.existsByPhone(phoneNumber);
+        if (isPhoneRegistered) {
+            throw new AlreadyExistsException("Phone number already registered: " + phoneNumber);
+        }
+        return false;
     }
 
     @CacheEvict(value = {"member", "members"}, key = "#memberId", allEntries = true)

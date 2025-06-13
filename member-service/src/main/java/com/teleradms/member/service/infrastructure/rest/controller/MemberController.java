@@ -32,7 +32,8 @@ public class MemberController {
     @PostMapping
     public ResponseEntity<BaseResponse<MemberResponseDTO>> create(@Valid @RequestBody CreateMemberRequestDTO dto) {
         MemberResponseDTO member = memberUseCase.createMember(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(BaseResponse.success(member, "Member created successfully", HttpStatus.CREATED.value()));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(BaseResponse.success(member, "Member created successfully", HttpStatus.CREATED.value()));
     }
 
     @Operation(summary = "Get a member by ID")

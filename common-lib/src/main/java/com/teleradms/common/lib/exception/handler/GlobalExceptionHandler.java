@@ -1,6 +1,7 @@
 package com.teleradms.common.lib.exception.handler;
 
 import com.teleradms.common.lib.dto.BaseResponse;
+import com.teleradms.common.lib.exception.AlreadyExistsException;
 import com.teleradms.common.lib.exception.BadRequestException;
 import com.teleradms.common.lib.exception.NotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -52,6 +53,14 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                 BaseResponse.failure(ex.getMessage(), HttpStatus.BAD_REQUEST.value(), request.getServletPath())
+        );
+    }
+
+    @ExceptionHandler(AlreadyExistsException.class)
+    public ResponseEntity<BaseResponse<Void>> handleAlreadyExistsException(AlreadyExistsException ex, HttpServletRequest request) {
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                BaseResponse.failure(ex.getMessage(), HttpStatus.CONFLICT.value(), request.getServletPath())
         );
     }
 }
