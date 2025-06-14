@@ -1,4 +1,6 @@
 package com.teleradms.hospital.service.infrastructure.persistence.adapter;
 
-public class HospitalAdapter {
+import com.teleradms.hospital.service.application.port.output.HospitalRepositoryPort;
+
+public class HospitalAdapter implements HospitalRepositoryPort {
 }
