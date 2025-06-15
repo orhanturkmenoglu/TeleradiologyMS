@@ -1,5 +1,6 @@
 package com.teleradms.member.service.application.service;
 
+import com.teleradms.common.lib.audit.AuditEvent;
 import com.teleradms.common.lib.exception.AlreadyExistsException;
 import com.teleradms.common.lib.exception.NotFoundException;
 import com.teleradms.member.service.application.dto.request.CreateMemberRequestDTO;
@@ -9,6 +10,7 @@ import com.teleradms.member.service.application.mapper.MemberMapper;
 import com.teleradms.member.service.application.port.input.MemberUseCase;
 import com.teleradms.member.service.application.port.output.MemberRepositoryPort;
 import com.teleradms.member.service.domain.entities.Member;
+import com.teleradms.member.service.infrastructure.kafka.KafkaProducer;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
@@ -18,6 +20,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -25,6 +28,7 @@ import java.util.UUID;
 public class MemberService implements MemberUseCase {
 
     private final MemberRepositoryPort memberRepositoryPort;
+    private final KafkaProducer kafkaProducer;
     private final MessageSource messageSource;
 
     @Transactional
@@ -35,6 +39,27 @@ public class MemberService implements MemberUseCase {
         existsByPhone(createMemberRequestDTO.getPhone());
 
         Member savedMember = memberRepositoryPort.save(member);
+
+        Map<String, Object> requestData = Map.of(
+                "phone", createMemberRequestDTO.getPhone(),
+                "name", createMemberRequestDTO.getFirstName()
+        );
+
+        // Audit log için responseData (örneğin oluşturulan member id)
+        Map<String, Object> responseData = Map.of(
+                "memberId", savedMember.getId()
+        );
+
+        kafkaProducer.sendAuditLog(
+                AuditEvent.builder()
+                        .serviceName("member-service")
+                        .action("CREATE_MEMBER")
+                        .userId(savedMember.getId().toString())   // userId olarak member id kullanıyoruz
+                        .ipAddress("127.0.0.1")                    // IP adresi elde ediliyorsa set et, burada örnek localhost
+                        .requestData(requestData)
+                        .responseData(responseData)
+                        .description("Yeni üye oluşturuldu: " + savedMember.getFirstName())
+                .build());
 
         return MemberMapper.toResponse(savedMember);
     }
