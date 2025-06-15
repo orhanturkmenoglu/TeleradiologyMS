@@ -8,30 +8,40 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+          <entry name="$PROJECT_DIR$/../../../../myrepo/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="audit-service" />
+        <module name="common-lib" />
+      </profile>
+      <profile name="Annotation profile for member-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$PROJECT_DIR$/../../../../myrepo/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+          <entry name="$PROJECT_DIR$/../../../../myrepo/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+          <entry name="$PROJECT_DIR$/../../../../myrepo/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="member-service" />
+      </profile>
+      <profile name="Annotation profile for user-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$PROJECT_DIR$/../../../../myrepo/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+          <entry name="$PROJECT_DIR$/../../../../myrepo/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
         <module name="hospital-service" />
         <module name="config-server" />
         <module name="auth-service" />
         <module name="api-gateway" />
         <module name="report-service" />
-        <module name="common-lib" />
         <module name="user-service" />
         <module name="company-service" />
         <module name="service-registry" />
         <module name="notification-service" />
         <module name="admin-service" />
-      </profile>
-      <profile name="Annotation profile for audit-service" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-        </processorPath>
-        <module name="audit-service" />
-        <module name="member-service" />
       </profile>
     </annotationProcessing>
   </component>
