@@ -2,12 +2,26 @@ spring:
   application:
     name: COMMON-LIB
 
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: default-group
+
+
+server:
+  port: 9090
+
 
   data:
     redis:
       host: localhost
       port: 6379
 
+
+
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 
 springdoc:
   api-docs:
