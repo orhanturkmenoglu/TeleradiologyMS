@@ -30,5 +30,7 @@ spring:
     bootstrap-servers: localhost:9092
     consumer:
       group-id: default-group
-
+    notification:
+      topic:
+        name: notificationTopic
 

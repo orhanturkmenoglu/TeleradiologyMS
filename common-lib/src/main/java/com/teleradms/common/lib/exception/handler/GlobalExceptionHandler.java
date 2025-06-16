@@ -1,6 +1,6 @@
 package com.teleradms.common.lib.exception.handler;
 
-import com.teleradms.common.lib.dto.BaseResponse;
+import com.teleradms.common.lib.base.BaseResponse;
 import com.teleradms.common.lib.exception.AlreadyExistsException;
 import com.teleradms.common.lib.exception.BadRequestException;
 import com.teleradms.common.lib.exception.NotFoundException;

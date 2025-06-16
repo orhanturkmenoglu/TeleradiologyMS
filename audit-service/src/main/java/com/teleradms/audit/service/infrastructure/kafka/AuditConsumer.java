@@ -6,7 +6,6 @@ import com.teleradms.audit.service.application.service.AuditLogService;
 import com.teleradms.common.lib.audit.AuditEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
@@ -18,15 +17,9 @@ public class AuditConsumer {
 
     private final AuditLogService auditLogService;
 
-    @Value("${spring.kafka.consumer.topic}")
-    private String auditTopic;
-
-    @Value("${spring.kafka.consumer.group-id}")
-    private String groupId;
-
     @KafkaListener(
-            topics = "#{__listener.auditTopic}",
-            groupId = "#{__listener.groupId}",
+            topics = "audit-log-topic",
+            groupId = "default-group",
             containerFactory = "kafkaListenerContainerFactory"
     )
     public void consumeAuditLog(@Payload AuditEvent auditEvent) {

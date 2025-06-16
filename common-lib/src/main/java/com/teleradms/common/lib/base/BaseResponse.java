@@ -1,4 +1,4 @@
-package com.teleradms.common.lib.dto;
+package com.teleradms.common.lib.base;
 
 import lombok.*;
 

@@ -1,6 +1,8 @@
 package com.teleradms.member.service.application.service;
 
 import com.teleradms.common.lib.audit.AuditEvent;
+import com.teleradms.common.lib.dto.NotificationEventDTO;
+import com.teleradms.common.lib.enums.NotificationType;
 import com.teleradms.common.lib.exception.AlreadyExistsException;
 import com.teleradms.common.lib.exception.NotFoundException;
 import com.teleradms.member.service.application.dto.request.CreateMemberRequestDTO;
@@ -50,17 +52,32 @@ public class MemberService implements MemberUseCase {
                 "memberId", savedMember.getId()
         );
 
-        kafkaProducer.sendAuditLog(
-                AuditEvent.builder()
-                        .serviceName("member-service")
-                        .action("CREATE_MEMBER")
-                        .userId(savedMember.getId().toString())   // userId olarak member id kullanıyoruz
-                        .ipAddress("127.0.0.1")                    // IP adresi elde ediliyorsa set et, burada örnek localhost
-                        .requestData(requestData)
-                        .responseData(responseData)
-                        .description("Yeni üye oluşturuldu: " + savedMember.getFirstName())
-                .build());
+        try {
+            kafkaProducer.sendAuditLog(
+                    AuditEvent.builder()
+                            .serviceName("member-service")
+                            .action("CREATE_MEMBER")
+                            .userId(savedMember.getId().toString())   // userId olarak member id kullanıyoruz
+                            .ipAddress("127.0.0.1")                    // IP adresi elde ediliyorsa set et, burada örnek localhost
+                            .requestData(requestData)
+                            .responseData(responseData)
+                            .description("Yeni üye oluşturuldu: " + savedMember.getFirstName())
+                            .build());
 
+
+
+            kafkaProducer.sendNotification(
+                    NotificationEventDTO.builder()
+                            .to("orhantrkm749@gmail.com")
+                            .subject("Member Service Üye kayıt ")
+                            .message("Yeni üye oluşturuldu: " + savedMember.getFirstName())
+                            .build()
+            );
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
         return MemberMapper.toResponse(savedMember);
     }
 
