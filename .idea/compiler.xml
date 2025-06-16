@@ -3,7 +3,7 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
-      <profile name="Annotation profile for api-gateway" enabled="true">
+      <profile name="Annotation profile for company-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -12,9 +12,9 @@
         </processorPath>
         <module name="hospital-service" />
         <module name="audit-service" />
-        <module name="common-lib" />
-        <module name="user-service" />
         <module name="company-service" />
+        <module name="user-service" />
+        <module name="common-lib" />
         <module name="notification-service" />
         <module name="config-server" />
         <module name="auth-service" />
