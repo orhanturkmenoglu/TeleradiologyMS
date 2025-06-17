@@ -1,6 +1,6 @@
 package com.teleradms.member.service.infrastructure.rest.controller;
 
-import com.teleradms.common.lib.dto.BaseResponse;
+import com.teleradms.common.lib.base.BaseResponse;
 import com.teleradms.member.service.application.dto.request.CreateMemberRequestDTO;
 import com.teleradms.member.service.application.dto.request.UpdateMemberRequestDTO;
 import com.teleradms.member.service.application.dto.response.MemberResponseDTO;

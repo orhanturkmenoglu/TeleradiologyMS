@@ -3,13 +3,15 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
-      <profile name="Annotation profile for company-service" enabled="true">
+      <profile name="Annotation profile for common-lib" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
+        <!-- Tüm modülleri birleştirdik -->
         <module name="hospital-service" />
         <module name="audit-service" />
         <module name="company-service" />
@@ -19,10 +21,21 @@
         <module name="config-server" />
         <module name="auth-service" />
         <module name="api-gateway" />
-        <module name="member-service" />
         <module name="report-service" />
         <module name="service-registry" />
         <module name="admin-service" />
+      </profile>
+      <profile name="Annotation profile for notification-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+        </processorPath>
+        <module name="hospital-service" />
+        <module name="member-service" />
+        <module name="audit-service" />
+        <module name="notification-service" />
       </profile>
     </annotationProcessing>
   </component>

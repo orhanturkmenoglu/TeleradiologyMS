@@ -1,0 +1,29 @@
+server:
+  port: 8082
+
+
+spring:
+  application:
+    name: AUDIT-SERVICE
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/audit-service
+
+  cloud:
+    config:
+      uri: http://localhost:8888
+
+
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      topic: audit-log-topic
+      group-id: default-group
+logging:
+  level:
+    org.springframework.kafka: DEBUG
+    org.springframework.apache.kafka.clients.consumer: DEBUG
