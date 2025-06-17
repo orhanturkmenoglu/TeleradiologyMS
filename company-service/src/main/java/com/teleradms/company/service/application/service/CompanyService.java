@@ -1,5 +1,6 @@
 package com.teleradms.company.service.application.service;
 
+import com.teleradms.common.lib.exception.NotFoundException;
 import com.teleradms.company.service.application.dto.request.CreateCompanyRequestDTO;
 import com.teleradms.company.service.application.dto.response.CompanyResponseDTO;
 import com.teleradms.company.service.application.mapper.CompanyMapper;
@@ -9,6 +10,7 @@ import com.teleradms.company.service.domain.entities.Company;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,9 +35,18 @@ public class CompanyService implements CompanyUseCase {
         return CompanyMapper.toResponse(savedCompany);
     }
 
+    @Cacheable(value = "company", key="#companyId")
     @Override
-    public CompanyResponseDTO getCompanyById(UUID id) {
-        return null;
+    public CompanyResponseDTO getCompanyById(UUID companyId) {
+        log.info("Get Company by id: {}", companyId);
+
+        Company foundCompany = companyRepositoryPort.findById(companyId).orElseThrow(
+                ()-> new NotFoundException("Company with id " + companyId + " not found")
+        );
+
+        log.info("Found Company: {}", foundCompany);
+
+        return CompanyMapper.toResponse(foundCompany);
     }
 
     @Override
