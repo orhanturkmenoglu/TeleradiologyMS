@@ -28,6 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>24</java.version>
+		<lombok.version>1.18.38</lombok.version>
 		<spring-cloud.version>2025.0.0</spring-cloud.version>
 	</properties>
 	<dependencies>
@@ -53,6 +54,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version> <!-- versiyon buraya eklendi -->
 			<optional>true</optional>
 		</dependency>
 		<dependency>
@@ -79,15 +81,19 @@
 		</dependencies>
 	</dependencyManagement>
 	<build>
+		<defaultGoal>spring-boot:run</defaultGoal>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
+							<version>${lombok.version}</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
@@ -95,14 +101,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
