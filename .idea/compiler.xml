@@ -11,13 +11,17 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
+        <!-- Tüm modülleri birleştirdik -->
+        <module name="hospital-service" />
+        <module name="audit-service" />
+        <module name="company-service" />
+        <module name="user-service" />
+        <module name="common-lib" />
+        <module name="notification-service" />
         <module name="config-server" />
         <module name="auth-service" />
         <module name="api-gateway" />
         <module name="report-service" />
-        <module name="common-lib" />
-        <module name="user-service" />
-        <module name="company-service" />
         <module name="service-registry" />
         <module name="admin-service" />
       </profile>
