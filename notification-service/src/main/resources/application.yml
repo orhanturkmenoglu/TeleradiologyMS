@@ -1,0 +1,35 @@
+server:
+  port: 8092
+
+spring:
+  application:
+    name: NOTIFICATION-SERVICE
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      topic: notificationTopic
+      group-id: notificationGroupId
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/notification-service
+
+  cloud:
+    config:
+      uri: http://localhost:8888
+
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: orhantrkmn15@gmail.com
+    password: xuitjybsoyovqitb
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+
+
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration

@@ -1,0 +1,36 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: MEMBER-SERVICE
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/TeleRadiologyDB
+    username: postgres
+    password: 12345
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  cloud:
+    config:
+      uri: http://localhost:8888
+  kafka:
+    topic:
+      name: audit-log-topic
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: default-group
+    notification:
+      topic:
+        name: notificationTopic
+
