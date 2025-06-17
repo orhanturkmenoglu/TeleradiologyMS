@@ -1,5 +1,6 @@
 package com.teleradms.hospital.service.infrastructure.persistence.entities;
 
+import com.teleradms.common.lib.base.BaseEntity;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -15,8 +16,7 @@ import jakarta.persistence.Table;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class HospitalEntity  extends BaseEntity{
-    private UUID id;
+public class HospitalEntity  extends BaseEntity {
     private String shortName;
     private String fullTitle;
     private String authorizedPerson;
