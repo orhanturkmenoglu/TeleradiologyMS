@@ -1,6 +1,7 @@
 package com.teleradms.company.service.application.port.input;
 
 import com.teleradms.company.service.application.dto.request.CreateCompanyRequestDTO;
+import com.teleradms.company.service.application.dto.request.UpdateCompanyRequestDTO;
 import com.teleradms.company.service.application.dto.response.CompanyResponseDTO;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface CompanyUseCase {
 
    List<CompanyResponseDTO> getAllCompanies();
 
-   CompanyResponseDTO updateCompany(UUID companyId, CreateCompanyRequestDTO createMemberRequestDTO);
+   CompanyResponseDTO updateCompany(UUID companyId, UpdateCompanyRequestDTO updateMemberRequestDTO);
 
-    void deleteCompany(UUID memberId);
+    void deleteCompany(UUID companyId);
 }

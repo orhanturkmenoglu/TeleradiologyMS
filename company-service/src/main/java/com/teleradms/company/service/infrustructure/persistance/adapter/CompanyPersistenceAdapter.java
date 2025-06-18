@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -29,16 +30,26 @@ public class CompanyPersistenceAdapter implements CompanyRepositoryPort {
 
     @Override
     public Optional<Company> findById(UUID uuid) {
-        return Optional.empty();
+        log.info("CompanyPersistenceAdapter::findById  Finding company by id: {}", uuid);
+
+        return companyRepository.findById(uuid)
+                .map(CompanyEntityMapper::toDomain);
     }
 
     @Override
     public List<Company> findAll() {
-        return List.of();
+        log.info("CompanyPersistenceAdapter::findAll  Fetching all companies");
+
+        return companyRepository.findAll()
+                .stream()
+                .map(CompanyEntityMapper::toDomain)
+                .collect(Collectors.toList());
     }
 
     @Override
     public void deleteById(UUID uuid) {
+        log.info("CompanyPersistenceAdapter::deleteById  Deleting company by id: {}", uuid);
 
+        companyRepository.deleteById(uuid);
     }
 }
