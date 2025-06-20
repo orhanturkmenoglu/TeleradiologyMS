@@ -16,8 +16,5 @@ public class GatewayRoutesConfig {
                 .route("MEMBER-SERVICE",
                         r -> r.path(BASE_URL + "/members/**")
                                 .uri("lb://MEMBER-SERVICE"))
-                .build();
-    }
-
-
+                .build();}
 }
