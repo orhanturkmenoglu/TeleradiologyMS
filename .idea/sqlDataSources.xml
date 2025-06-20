@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="7c40a576-ccec-4532-adf6-e231370f9b0d" name="teleradiology@localhost Mapping">
+      <data-sources db="d41c6797-c4bf-47dc-bb87-3c41e4753d49" ddl="3fb87e46-292d-41b8-9918-8f0a42ae9866" />
+    </mapping>
+  </component>
+</project>
