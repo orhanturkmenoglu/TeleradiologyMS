@@ -37,12 +37,6 @@ public class CompanyService implements CompanyUseCase {
         return CompanyMapper.toResponse(savedCompany);
     }
 
-    //bu method 3 yerde kullanılıyor. yardımcı bir method yazıldı ve ilgili yerden çağrıldı
-    private Company findCompanyById(UUID companyId) {
-        return companyRepositoryPort.findById(companyId).orElseThrow(
-                () -> new NotFoundException("Company with id " + companyId + " not found")
-        );
-    }
 
     @Cacheable(value = "company", key = "#companyId")
     @Override
@@ -91,4 +85,12 @@ public class CompanyService implements CompanyUseCase {
 
         companyRepositoryPort.deleteById(foundCompany.getId());
     }
+
+    //bu method 3 yerde kullanılıyor. yardımcı bir method yazıldı ve ilgili yerden çağrıldı
+    private Company findCompanyById(UUID companyId) {
+        return companyRepositoryPort.findById(companyId).orElseThrow(
+                () -> new NotFoundException("Company with id " + companyId + " not found")
+        );
+    }
+
 }
