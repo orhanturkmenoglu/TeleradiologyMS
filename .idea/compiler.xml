@@ -3,19 +3,18 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
-      <profile name="Annotation profile for service-registry" enabled="true">
+      <profile name="Annotation profile for report-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
-          <entry name="$PROJECT_DIR$/../../../../myrepo/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+          <entry name="$PROJECT_DIR$/../../../../myrepo/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+          <entry name="$PROJECT_DIR$/../../../../myrepo/org/mapstruct/mapstruct-processor/1.5.5.Final/mapstruct-processor-1.5.5.Final.jar" />
+          <entry name="$PROJECT_DIR$/../../../../myrepo/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
         </processorPath>
-        <module name="config-server" />
-        <module name="company-service" />
-        <module name="service-registry" />
-        <module name="notification-service" />
+        <module name="report-service" />
       </profile>
-      <profile name="Annotation profile for hospital-service" enabled="true">
+      <profile name="Annotation profile for member-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -23,13 +22,24 @@
           <entry name="$PROJECT_DIR$/../../../../myrepo/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
         <module name="hospital-service" />
-        <module name="auth-service" />
-        <module name="audit-service" />
-        <module name="api-gateway" />
         <module name="member-service" />
-        <module name="report-service" />
         <module name="common-lib" />
+        <module name="audit-service" />
+      </profile>
+      <profile name="Annotation profile for user-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$PROJECT_DIR$/../../../../myrepo/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="config-server" />
+        <module name="auth-service" />
+        <module name="api-gateway" />
         <module name="user-service" />
+        <module name="company-service" />
+        <module name="service-registry" />
+        <module name="notification-service" />
         <module name="admin-service" />
       </profile>
     </annotationProcessing>

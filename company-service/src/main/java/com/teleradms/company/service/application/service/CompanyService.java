@@ -1,6 +1,8 @@
 package com.teleradms.company.service.application.service;
 
+import com.teleradms.common.lib.exception.NotFoundException;
 import com.teleradms.company.service.application.dto.request.CreateCompanyRequestDTO;
+import com.teleradms.company.service.application.dto.request.UpdateCompanyRequestDTO;
 import com.teleradms.company.service.application.dto.response.CompanyResponseDTO;
 import com.teleradms.company.service.application.mapper.CompanyMapper;
 import com.teleradms.company.service.application.port.input.CompanyUseCase;
@@ -9,6 +11,8 @@ import com.teleradms.company.service.domain.entities.Company;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,23 +37,58 @@ public class CompanyService implements CompanyUseCase {
         return CompanyMapper.toResponse(savedCompany);
     }
 
+    //bu method 3 yerde kullanılıyor. yardımcı bir method yazıldı ve ilgili yerden çağrıldı
+    private Company findCompanyById(UUID companyId) {
+        return companyRepositoryPort.findById(companyId).orElseThrow(
+                () -> new NotFoundException("Company with id " + companyId + " not found")
+        );
+    }
+
+    @Cacheable(value = "company", key = "#companyId")
     @Override
-    public CompanyResponseDTO getCompanyById(UUID id) {
-        return null;
+    public CompanyResponseDTO getCompanyById(UUID companyId) {
+        log.info("Get Company by id: {}", companyId);
+
+        Company foundCompany = findCompanyById(companyId);
+
+        log.info("Found Company: {}", foundCompany);
+
+        return CompanyMapper.toResponse(foundCompany);
     }
 
     @Override
     public List<CompanyResponseDTO> getAllCompanies() {
+        log.info("Get all companies");
+
+        List<Company> foundCompanies = companyRepositoryPort.findAll();
+        log.info("Found companies: {}", foundCompanies);
+
         return List.of();
     }
 
+
+    @CacheEvict(value = "company", key = "#companyId")
     @Override
-    public CompanyResponseDTO updateCompany(UUID companyId, CreateCompanyRequestDTO createMemberRequestDTO) {
-        return null;
+    public CompanyResponseDTO updateCompany(UUID companyId, UpdateCompanyRequestDTO updateCompanyRequestDTO) {
+        log.info("Update Company: {}", updateCompanyRequestDTO);
+
+        Company company = findCompanyById(companyId);
+
+        Company updatedCompany = CompanyMapper.updateDomain(company, updateCompanyRequestDTO);
+        Company savedCompany = companyRepositoryPort.save(updatedCompany);
+        log.info("Updated Company: {}", savedCompany);
+
+        return CompanyMapper.toResponse(savedCompany);
     }
 
+    @CacheEvict(value = {"company", "companies"}, key = "#companyId", allEntries = true)
     @Override
-    public void deleteCompany(UUID memberId) {
+    public void deleteCompany(UUID companyId) {
+        log.info("Delete Company: {}", companyId);
 
+        //company db de var mi?
+        Company foundCompany = findCompanyById(companyId);
+
+        companyRepositoryPort.deleteById(foundCompany.getId());
     }
 }

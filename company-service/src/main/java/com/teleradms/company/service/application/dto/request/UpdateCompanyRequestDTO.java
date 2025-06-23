@@ -4,8 +4,8 @@ import com.teleradms.company.service.domain.enums.CompanyType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 @Getter
@@ -14,7 +14,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Schema(description = "Request DTO for creating a new company")
-public class CreateCompanyRequestDTO {
+public class UpdateCompanyRequestDTO {
 
     @NotEmpty(message = "Company small title is required")
     @Schema(description = "Short title for the company", example = "Telerad Inc.")
