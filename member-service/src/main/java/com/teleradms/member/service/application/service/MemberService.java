@@ -59,15 +59,15 @@ public class MemberService implements MemberUseCase {
                             .ipAddress("127.0.0.1")                    // IP adresi elde ediliyorsa set et, burada örnek localhost
                             .requestData(requestData)
                             .responseData(responseData)
-                            .description("Yeni üye oluşturuldu: " + savedMember.getFirstName())
+                            .description(messageUtil.getMessage("MEMBER_INFO_CREATED") + savedMember.getFirstName())
                             .build());
 
 
             kafkaProducer.sendNotification(
                     NotificationEventDTO.builder()
-                            .to("orhantrkm749@gmail.com")
-                            .subject("Member Service Üye kayıt ")
-                            .message("Yeni üye oluşturuldu: " + savedMember.getFirstName())
+                            .to(member.getEmail())
+                            .subject(messageUtil.getMessage("SERVICE_REGISTRATION"))
+                            .message(messageUtil.getMessage("MEMBER_INFO_CREATED") + savedMember.getFirstName())
                             .build()
             );
 
