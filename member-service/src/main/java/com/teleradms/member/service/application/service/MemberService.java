@@ -2,9 +2,9 @@ package com.teleradms.member.service.application.service;
 
 import com.teleradms.common.lib.audit.AuditEvent;
 import com.teleradms.common.lib.dto.NotificationEventDTO;
-import com.teleradms.common.lib.enums.NotificationType;
 import com.teleradms.common.lib.exception.AlreadyExistsException;
 import com.teleradms.common.lib.exception.NotFoundException;
+import com.teleradms.common.lib.utils.MessageUtil;
 import com.teleradms.member.service.application.dto.request.CreateMemberRequestDTO;
 import com.teleradms.member.service.application.dto.request.UpdateMemberRequestDTO;
 import com.teleradms.member.service.application.dto.response.MemberResponseDTO;
@@ -17,8 +17,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,7 +29,7 @@ public class MemberService implements MemberUseCase {
 
     private final MemberRepositoryPort memberRepositoryPort;
     private final KafkaProducer kafkaProducer;
-    private final MessageSource messageSource;
+    private final MessageUtil messageUtil;
 
     @Transactional
     @Override
@@ -65,7 +63,6 @@ public class MemberService implements MemberUseCase {
                             .build());
 
 
-
             kafkaProducer.sendNotification(
                     NotificationEventDTO.builder()
                             .to("orhantrkm749@gmail.com")
@@ -85,7 +82,7 @@ public class MemberService implements MemberUseCase {
     @Override
     public MemberResponseDTO getMemberById(UUID memberId) {
         Member member = memberRepositoryPort.
-                findById(memberId).orElseThrow(() -> new NotFoundException(messageSource.getMessage("MEMBER_ERR_NOT_FOUND", new Object[]{memberId}, LocaleContextHolder.getLocale())));
+                findById(memberId).orElseThrow(() -> new NotFoundException(messageUtil.getMessage("MEMBER_ERR_NOT_FOUND", memberId)));
 
         return MemberMapper.toResponse(member);
     }
@@ -101,7 +98,7 @@ public class MemberService implements MemberUseCase {
     @Override
     public MemberResponseDTO updateMember(UUID memberId, UpdateMemberRequestDTO updateMemberRequestDTO) {
         Member member = memberRepositoryPort.
-                findById(memberId).orElseThrow(() -> new NotFoundException(messageSource.getMessage("MEMBER_ERR_NOT_FOUND", new Object[]{memberId}, LocaleContextHolder.getLocale())));
+                findById(memberId).orElseThrow(() -> new NotFoundException(messageUtil.getMessage("MEMBER_ERR_NOT_FOUND", memberId)));
 
         Member updatedMember = MemberMapper.updateDomain(member, updateMemberRequestDTO);
         Member savedMember = memberRepositoryPort.save(updatedMember);
@@ -113,7 +110,7 @@ public class MemberService implements MemberUseCase {
     public boolean existsByPhone(String phoneNumber) {
         boolean isPhoneRegistered = memberRepositoryPort.existsByPhone(phoneNumber);
         if (isPhoneRegistered) {
-            throw new AlreadyExistsException("Phone number already registered: " + phoneNumber);
+            throw new AlreadyExistsException(messageUtil.getMessage("PHONE_ALREADY_REGISTERED", phoneNumber));
         }
         return false;
     }
@@ -122,7 +119,7 @@ public class MemberService implements MemberUseCase {
     @Override
     public void deleteMember(UUID memberId) {
         Member member = memberRepositoryPort.findById(memberId)
-                .orElseThrow(() -> new NotFoundException(messageSource.getMessage("MEMBER_ERR_NOT_FOUND", new Object[]{memberId}, LocaleContextHolder.getLocale())));
+                .orElseThrow(() -> new NotFoundException(messageUtil.getMessage("MEMBER_ERR_NOT_FOUND" ,memberId)));
 
         memberRepositoryPort.deleteById(member.getId());
     }
