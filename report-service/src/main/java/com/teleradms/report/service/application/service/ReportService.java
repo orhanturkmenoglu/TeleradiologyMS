@@ -27,11 +27,13 @@ public class ReportService implements ReportUseCase {
     }
 
     @Override
-    public ReportResponseDTO updateReport(UUID id, UpdateReportRequestDTO dto) {
-        Report report = reportRepositoryPort.findById(id)
+    public ReportResponseDTO updateReport(UpdateReportRequestDTO dto) {
+        Report report = reportRepositoryPort.findById(dto.getId())
                 .orElseThrow(() -> new RuntimeException("Report not found"));
-        report.setTitle(dto.getTitle());
-        report.setContent(dto.getContent());
+        report.setReportName(dto.getReportName());
+        report.setEmergency(dto.getEmergency());
+        report.setModalityType(dto.getModalityType());
+        report.setTemplateId(dto.getTemplateId());
         Report updated = reportRepositoryPort.save(report);
         return reportMapper.toResponse(updated);
     }

@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface ReportUseCase {
     ReportResponseDTO createReport(CreateReportRequestDTO dto);
 
-    ReportResponseDTO updateReport(UUID id, UpdateReportRequestDTO dto);
+    ReportResponseDTO updateReport(UpdateReportRequestDTO dto);
 
     void deleteReport(UUID id);
 
