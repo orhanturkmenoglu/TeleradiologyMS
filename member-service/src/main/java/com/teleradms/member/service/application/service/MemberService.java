@@ -1,5 +1,7 @@
 package com.teleradms.member.service.application.service;
 
+
+
 import com.teleradms.common.lib.audit.AuditEvent;
 import com.teleradms.common.lib.dto.NotificationEventDTO;
 import com.teleradms.common.lib.exception.AlreadyExistsException;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
 
 @Service
 @RequiredArgsConstructor
@@ -46,7 +49,7 @@ public class MemberService implements MemberUseCase {
         );
 
         // Audit log için responseData (örneğin oluşturulan member id)
-        Map<String, Object> responseData = Map.of(
+        Map<String, Object> responseData =Map.of(
                 "memberId", savedMember.getId()
         );
 
