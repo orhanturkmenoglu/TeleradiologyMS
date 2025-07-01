@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -12,15 +14,17 @@ import lombok.*;
 @Builder
 public class CreateReportRequestDTO {
 
-    @NotBlank(message = "Title must not be blank")
-    @Size(min = 3, max = 100, message = "Title must be between 3 and 100 characters")
-    private String title;
+    @NotBlank(message = "Report name must not be blank")
+    @Size(min = 3, max = 100, message = "Report name must be between 3 and 100 characters")
+    private String reportName;
 
-    @NotBlank(message = "Description must not be blank")
-    @Size(min = 5, max = 1000, message = "Description must be between 5 and 1000 characters")
-    private String description;
+    @NotNull(message = "Emergency must not be null")
+    private Boolean emergency;
 
-    @NotNull(message = "AuthorId must not be null")
-    @Size(min = 36, max = 36, message = "AuthorId must be a valid UUID")
-    private String authorId;
+    @NotBlank(message = "Modality type must not be blank")
+    @Size(min = 2, max = 50, message = "Modality type must be between 2 and 50 characters")
+    private String modalityType;
+
+    @NotNull(message = "TemplateId must not be null")
+    private UUID templateId;
 }

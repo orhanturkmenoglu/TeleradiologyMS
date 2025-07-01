@@ -3,7 +3,6 @@ package com.teleradms.report.service.infrastructure.persistence.adapter;
 import com.teleradms.report.service.infrastructure.persistence.mapper.ReportEntityMapper;
 import com.teleradms.report.service.application.port.output.ReportRepositoryPort;
 import com.teleradms.report.service.domain.entities.Report;
-
 import com.teleradms.report.service.infrastructure.persistence.ReportEntity;
 import com.teleradms.report.service.infrastructure.persistence.ReportRepository;
 import lombok.RequiredArgsConstructor;
